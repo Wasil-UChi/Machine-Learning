@@ -8,8 +8,11 @@ Created on Mon Jan 25 22:01:18 2021
 
 # Homework 1: Wasil Engel 
 
+        # Homework 1: Wasil Engel 
+
         
 
+import pandas as pd
 import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
@@ -262,5 +265,17 @@ plt.title('Comparison univariate v. multivariate regression coefficients', fonts
 # d 
 # Is there evidence of non-linear association between any of the predictors and the response? To answer this question,
 # for each predictor X, fit a model of the form Y = β0 + β1X + β2X^2 + β3X^3 + E.
-## We haven't covered this yet, neither in class nor in lab ... 
+
+predictorss = ' + '.join(df.columns.difference([14,'CRIM']))
+result = smf.ols(formula = 'CRIM ~ {} + MDEV + np.power(MDEV, 2) + np.power(MDEV, 3)'.format(predictorss),data = df).fit()
+print(result.summary())
+
+# Yes, from what I can see, based on the regression table, the following predictors suggest that there is evidence of a non-linear association between CRIM and:
+# - DIS, ceteris paribus
+# - LSTAT, ceteris paribus
+# - MDEV, ceteris paribus
+# - NOX, ceteris paribus
+# - RAD, ceteris paribus
+# - RM, ceteris paribus
+# - the interaction terms, np.power(MDEV, 2) and np.power(MDEV, 3)
 
